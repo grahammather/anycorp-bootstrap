@@ -43,7 +43,7 @@ resource "tfe_workspace_variable_set" "management_vault" {
 # https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable
 
 resource "tfe_variable_set" "vault" {
-  name          = "Vault Varset - ${data.tfe_project.admin_project.name}"
+  name          = local.tfe_vault_varset_name
   description   = "Enables a workspace to use the Vault provider."
   organization  = data.tfe_organization.this.name
 }
