@@ -28,9 +28,9 @@ data "tfe_workspace" "management" {
   organization = data.tfe_organization.this.name
 }
 
-resource "tfe_workspace_variable_set" "management_vault" {
+resource "tfe_project_variable_set" "management_vault" {
   variable_set_id = tfe_variable_set.vault.id
-  workspace_id = data.tfe_workspace.management.id
+  project_id = data.tfe_project.admin_project.id
 }
 
 #================
