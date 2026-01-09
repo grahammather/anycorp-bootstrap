@@ -43,7 +43,7 @@ resource "tfe_workspace_variable_set" "management_vault" {
 # https://registry.terraform.io/providers/hashicorp/tfe/latest/docs/resources/variable
 
 resource "tfe_variable_set" "vault" {
-  name          = "Vault Varset"
+  name          = "Vault Varset - ${data.tfe_project.admin_project.name}"
   description   = "Enables a workspace to use the Vault provider."
   organization  = data.tfe_organization.this.name
 }
@@ -82,7 +82,7 @@ resource "tfe_variable" "tfc_vault_namespace" {
   description = "The Vault namespace to use, if not using the default"
 }
 
-resource "tfe_project_variable_set" "name" {
+resource "tfe_project_variable_set" "vault_varset" {
   variable_set_id = tfe_variable_set.vault.id
   project_id = data.tfe_project.admin_project.id
 }
@@ -107,15 +107,15 @@ resource "tfe_variable" "tfe_management_vault_role" {
   description = "The Vault role runs will use to authenticate."
 }
 
-# resource "tfe_variable" "tfc_vault_auth_path" {
-#   variable_set_id = tfe_variable_set.vault.id
+resource "tfe_variable" "tfc_vault_auth_path" {
+  variable_set_id = tfe_variable_set.vault.id
 
-#   key      = "TFC_VAULT_AUTH_PATH"
-#   value    = var.jwt_backend_path
-#   category = "env"
+  key      = "TFC_VAULT_AUTH_PATH"
+  value    = local.vault_jwt_auth_path
+  category = "env"
 
-#   description = "The path where the jwt auth backend is mounted, if not using the default"
-# }
+  description = "The path where the jwt auth backend is mounted, if not using the default"
+}
 
 # resource "tfe_variable" "tfe_vault_audience" {
 #   variable_set_id = tfe_variable_set.vault.id
