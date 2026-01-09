@@ -1,7 +1,7 @@
 # Codify LZ management by explicitly specifying systems
 locals {
   tfe_admin_org = "" # name of the org in TFE that's use to administrate the shared-tenant org
-  tfe_admin_project = "Default Project" # the project that holds the bootstrap and management workspaces
+  tfe_admin_project = "" # the project that holds the bootstrap and management workspaces
   tfe_management_workspace = "" # the workspace in the admin org for the management repo that manages the shared-tenant org
   tfe_bootstrap_workspace = "" # the VCS workspace for this codebase. bootstraps the management workspace
 

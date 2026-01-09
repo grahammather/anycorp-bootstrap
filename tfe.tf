@@ -11,6 +11,11 @@ data "tfe_organization" "this" {
   }
 }
 
+data "tfe_project" "admin_project" {
+  name = local.tfe_admin_project
+  organization = data.tfe_organization.this.name
+}
+
 data "tfe_workspace" "bootstrap" {
   name = local.tfe_bootstrap_workspace
   organization = data.tfe_organization.this.name
@@ -77,9 +82,9 @@ resource "tfe_variable" "tfc_vault_namespace" {
   description = "The Vault namespace to use, if not using the default"
 }
 
-resource "tfe_workspace_variable_set" "name" {
+resource "tfe_project_variable_set" "name" {
   variable_set_id = tfe_variable_set.vault.id
-  workspace_id = data.tfe_workspace.bootstrap.id
+  project_id = data.tfe_project.admin_project.id
 }
 
 resource "tfe_variable" "tfe_bootstrap_vault_role" {
